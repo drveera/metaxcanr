@@ -14,4 +14,3 @@ create.snpcov.matrix(snpcov, snps)
 \description{
 create a matrix from pairwise data
 }
-

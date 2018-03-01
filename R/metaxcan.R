@@ -41,15 +41,6 @@ metaxcan <- function(gwas.file,
   ##get extras
   extra <- tbl(db.con,"extra") %>% collect()
   extra <- data.table(extra)
-  res <- merge(res,extra,by="gene")
+  #res <- merge(res,extra,by="gene")
   return(res)
 }
-
-##library(DBI,lib.loc = "~/va-biobank/Veera/Rlibraries/")
-##library(dbplyr)
-##library(dbplyr,,lib.loc = "~/va-biobank/Veera/Rlibraries/")
-##library(dplyr,lib.loc = "~/va-biobank/Veera/Rlibraries/")
-##library(RSQLite, lib.loc = "~/va-biobank/Veera/Rlibraries/")
-##library(data.table)
-##library(foreach)
-##library(doParallel)

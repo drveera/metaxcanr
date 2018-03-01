@@ -16,4 +16,3 @@ metaxcan(gwas.file, db.file, snpcov.file, ncores = 1)
 \description{
 metaxcan main function
 }
-

@@ -18,4 +18,3 @@ impute.zscore(gene.name, gwas, db, snpcov)
 \description{
 impute the z score
 }
-
