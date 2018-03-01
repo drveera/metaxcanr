@@ -7,7 +7,7 @@ for more details on metaxcan method refer to Metaxcan/Predixcan authors' repo (h
 ## installation
 ```
 library(devtools)
-install_github("drveera/metaxcanr")`
+install_github("drveera/metaxcanr")
 ```
 
 ## usage 
