@@ -1,6 +1,9 @@
 # metaxcanr
 An R alternative to MetaXcan 
 
+## more details on method
+for more details on metaxcan method refer to Metaxcan/Predixcan authors' repo (https://github.com/hakyimlab/MetaXcan)
+
 ## installation
 ```
 library(devtools)
