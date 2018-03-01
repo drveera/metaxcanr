@@ -4,7 +4,7 @@
 #' @param db.file prediction model db file name
 #' @param snpcov.file pairwise snp-covariance file name
 #'
-#' @importFrom  DBI dbConnect
+#' @importFrom  DBI dbConnect dbDisconnect
 #' @import dbplyr
 #' @import dplyr
 #' @importFrom RSQLite SQLite
@@ -42,5 +42,6 @@ metaxcan <- function(gwas.file,
   extra <- tbl(db.con,"extra") %>% collect()
   extra <- data.table(extra)
   res <- merge(res,extra,by="gene")
+  dbDisconnect(db.con)
   return(res)
 }
