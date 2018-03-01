@@ -1,0 +1,19 @@
+Package: metaxcanr
+Version: 0.1
+Date: 2018-03-01
+Title: metaxcanr
+Description: A R alternative to MetaXcan python package
+Author: Veera M Rajagopal <veera@biomed.au.dk>
+Maintainer: Veera M Rajagopal <veera@biomed.au.dk>
+Depends:
+    R(>= 3.1.0)
+Imports:
+    data.table,
+    DBI (>= 0.7),
+    dbplyr (>= 1.2.0),
+    dplyr,
+    RSQLite,
+    foreach,
+    doParallel,
+    parallel
+RoxygenNote: 5.0.1
