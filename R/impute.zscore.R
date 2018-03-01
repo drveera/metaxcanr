@@ -19,7 +19,7 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
   if(nrow(gwas)<=1){
     zscore=NA
     effsize=NA
-    res <- data.frame(genename=gene.name,
+    res <- data.frame(gene=gene.name,
                       zscore=zscore,
                       effsize=effsize,
                       n_snps_used=n_snps_used,
@@ -79,7 +79,7 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
   zscore <- sum(snpwts * zscores * sigmas)/sqrt(genevariance)
   effsize <- sum(snpwts * betas * (sigmas^2))/genevariance
 
-  res <- data.frame(genename=gene.name,
+  res <- data.frame(gene=gene.name,
                     zscore=zscore,
                     effsize=effsize,
                     n_snps_used=n_snps_used,

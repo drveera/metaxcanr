@@ -41,7 +41,7 @@ metaxcan <- function(gwas.file,
   ##get extras
   extra <- tbl(db.con,"extra") %>% collect()
   extra <- data.table(extra)
-  res <- merge(res,extra,by="genename")
+  res <- merge(res,extra,by="gene")
   return(res)
 }
 
