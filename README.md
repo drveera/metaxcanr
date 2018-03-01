@@ -2,8 +2,10 @@
 An R alternative to MetaXcan 
 
 ## installation
-`library(devtools)`
-`github_install("drveera/metaxcanr")`
+```
+library(devtools)
+install_github("drveera/metaxcanr")`
+```
 
 ## usage 
 ```
