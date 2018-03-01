@@ -4,14 +4,14 @@
 #' @param db.file prediction model db file name
 #' @param snpcov.file pairwise snp-covariance file name
 #'
-#' @import DBI
+#' @importFrom  DBI dbConnect
 #' @import dbplyr
 #' @import dplyr
-#' @import RSQLite
+#' @importFrom RSQLite SQLite
 #' @import data.table
 #' @import foreach
 #' @import doParallel
-#' @import parallel
+#' @importFrom parallel makeCluster
 #' 
 #' @export
 metaxcan <- function(gwas.file,

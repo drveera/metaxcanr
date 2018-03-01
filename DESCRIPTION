@@ -11,8 +11,8 @@ Imports:
     data.table,
     DBI (>= 0.7),
     dbplyr (>= 1.2.0),
-    dplyr,
-    RSQLite,
+    dplyr (>= 0.7.4),
+    RSQLite (>= 2.0),
     foreach,
     doParallel,
     parallel
