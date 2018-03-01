@@ -34,3 +34,11 @@ library(metaxcanr)
 results <- metaxcan(gwas.file="sample.gwas.summary", db.file = "sample.db", snpcov.file="sample.snpcov")
 
 ```
+
+## Format of GWAS data
+
+The gwas data should have columns: SNP, A1, A2, BETA, SE 
+
+If OR, change that to BETA by taking log(OR)
+
+**Its very important the above columns should be there in the gwas file**
