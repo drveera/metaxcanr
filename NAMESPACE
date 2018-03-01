@@ -2,6 +2,7 @@
 
 export(create.snpcov.matrix)
 export(impute.zscore)
+export(impute.zscore.debug)
 export(metaxcan)
 import(data.table)
 import(dbplyr)

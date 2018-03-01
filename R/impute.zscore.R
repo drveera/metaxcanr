@@ -23,7 +23,8 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
                       zscore=zscore,
                       effsize=effsize,
                       n_snps_used=n_snps_used,
-                      n_snps_in_model=n_snps_in_model)
+                      n_snps_in_model=n_snps_in_model,
+                      stringsAsFactors = FALSE)
     return(res)
   }
   db <- db[rsid %in% gwas$SNP]
@@ -65,9 +66,11 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
 
   ##cov matrix
   snpcov.mat <- create.snpcov.matrix(snpcov,snps=snps)
+  print(snpcov.mat)
 
   ##get diagonals
   snpcov.diag <- diag(snpcov.mat)
+
 
   ##sigmas
   sigmas <- sqrt(snpcov.diag)
@@ -83,6 +86,7 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
                     zscore=zscore,
                     effsize=effsize,
                     n_snps_used=n_snps_used,
-                    n_snps_in_model=n_snps_in_model)
+                    n_snps_in_model=n_snps_in_model,
+                    stringsAsFactors = FALSE)
   return(res)
 }

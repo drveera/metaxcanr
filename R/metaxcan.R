@@ -25,19 +25,29 @@ metaxcan <- function(gwas.file,
 
   ##read the covariance file
   snpcov <- fread(snpcov.file, header=TRUE)
+  snpcov <- snpcov[!is.na(VALUE)]
 
   ##load the db file
   db.con <- dbConnect(SQLite(), db.file)
   db.df <- tbl(db.con,"weights")  %>% collect()
   db.df <- data.table(db.df)
+
+###
+  ##subset gwas
+  gwas <- gwas[SNP %in% db.df$rsid]
+  ##keep only genes with predictors in gwas file
+  db.df <- db.df[rsid %in% gwas$SNP]
+  snpcov <- snpcov[GENE %in% db.df$gene]
+####
+
   genes <- unique(db.df$gene)
   res <- list()
   cl <- makeCluster(ncores)
   registerDoParallel(cl)
   res <- foreach(i=genes,
-                 .combine = rbind,
-                 .packages=c("data.table","metaxcanr")) %dopar%
-    impute.zscore(gene.name=i,gwas=gwas,db=db.df,snpcov=snpcov)
+                 .combine = bind_rows,
+                 .packages=c("data.table","metaxcanr","dplyr")) %dopar%
+    impute.zscore.debug(geneid=i,gene.name=i,gwas=gwas,db=db.df,snpcov=snpcov)
   ##get extras
   extra <- tbl(db.con,"extra") %>% collect()
   extra <- data.table(extra)
