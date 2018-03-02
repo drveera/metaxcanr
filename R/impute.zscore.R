@@ -27,14 +27,22 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
                       stringsAsFactors = FALSE)
     return(res)
   }
-  db <- db[rsid %in% gwas$SNP]
-  cat("total no. of snps used for",gene.name,nrow(gwas),"\n")
-  ##snps
-  snps <- db$rsid
+
+  ##cov matrix
+  snpcov.mat <- create.snpcov.matrix(snpcov)
+  snps <- rownames(snpcov.mat)
+  snps <- snps[snps %in% gwas$SNP]
+  ##update matrix
+  snpcov.mat <- snpcov.mat[snps,snps]
+  ##keep weights only present in gwas and cov mat
+  db <- db[rsid %in% snps]
+
+  ##cat("total no. of snps used for",gene.name,nrow(gwas),"\n")
 
   ##weights
   snpwts <- db$weight
   names(snpwts) <- db$rsid
+  snpwts <- snpwts[snps]
 
   ##effalleles
   effalleles <- db$eff_allele
@@ -64,9 +72,6 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
   zscores <- ifelse(a1==effalleles,zscores,(zscores*-1))
   betas <- zscores*serrors
 
-  ##cov matrix
-  snpcov.mat <- create.snpcov.matrix(snpcov,snps=snps)
-  print(snpcov.mat)
 
   ##get diagonals
   snpcov.diag <- diag(snpcov.mat)

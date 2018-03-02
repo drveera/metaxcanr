@@ -5,7 +5,9 @@
 #' @param snps a vector of snps to subset
 #'
 #' @export
-create.snpcov.matrix <- function(snpcov,snps){
+
+create.snpcov.matrix <- function(snpcov){
+  snpcov <- snpcov[!is.na(VALUE)]
   snpcov.dup <- snpcov
   snpcov.dup$RSID1 <- snpcov$RSID2
   snpcov.dup$RSID2 <- snpcov$RSID1
@@ -18,6 +20,6 @@ create.snpcov.matrix <- function(snpcov,snps){
   snpcov.mat <- sapply(snpcov.mat,as.numeric)
   snpcov.mat <- as.matrix(snpcov.mat)
   rownames(snpcov.mat) <- snp.ids
-  snpcov.mat <- snpcov.mat[snps,snps]
+  snpcov.mat <- snpcov.mat[,snp.ids]
   return(snpcov.mat)
 }

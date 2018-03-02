@@ -4,7 +4,7 @@
 \alias{create.snpcov.matrix}
 \title{create a matrix from pairwise data}
 \usage{
-create.snpcov.matrix(snpcov, snps)
+create.snpcov.matrix(snpcov)
 }
 \arguments{
 \item{snpcov}{pairwise covariance matrix}
