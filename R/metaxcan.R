@@ -51,6 +51,7 @@ metaxcan <- function(gwas.file,
   ##get extras
   extra <- tbl(db.con,"extra") %>% collect()
   extra <- data.table(extra)
+  res$pvalue <- 2 * pnorm(-abs(res$zscore))
   res <- merge(res,extra,by="gene")
   dbDisconnect(db.con)
   return(res)

@@ -15,7 +15,7 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
   n_snps_in_model <- nrow(db)
   snpcov <- snpcov[GENE==gene.name]
   gwas <- gwas[SNP %in% db$rsid]
-  n_snps_used <- nrow(gwas)
+  n_snps_used <- nrow(gwas) ##keep this for using it in NA genes
   if(nrow(gwas)<=1){
     zscore=NA
     effsize=NA
@@ -32,6 +32,7 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
   snpcov.mat <- create.snpcov.matrix(snpcov)
   snps <- rownames(snpcov.mat)
   snps <- snps[snps %in% gwas$SNP]
+  n_snps_used <- length(snps) ##this is actual n
   ##update matrix
   snpcov.mat <- snpcov.mat[snps,snps]
   ##keep weights only present in gwas and cov mat
