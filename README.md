@@ -45,6 +45,6 @@ If OR, change that to BETA by taking log(OR)
  
 ## For Citation
 
-1. Barbeira, A. et al. Integrating tissue specific mechanisms into GWAS summary results. bioRxiv 045260 (2017). doi:10.1101/045260
+1. Barbeira, A. N. et al. Exploring the phenotypic consequences of tissue specific gene expression variation inferred from GWAS summary statistics. bioRxiv 045260 (2017). doi:10.1101/045260
 
 (link: https://www.biorxiv.org/content/early/2017/10/03/045260)
