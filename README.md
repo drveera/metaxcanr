@@ -42,3 +42,9 @@ The gwas data should have columns: SNP, A1, A2, BETA, SE
 If OR, change that to BETA by taking log(OR)
 
 **Its very important the above columns should be there in the gwas file**
+ 
+## For Citation
+
+1. Barbeira, A. et al. Integrating tissue specific mechanisms into GWAS summary results. bioRxiv 045260 (2017). doi:10.1101/045260
+
+(link: https://www.biorxiv.org/content/early/2017/10/03/045260)
