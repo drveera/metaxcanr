@@ -8,11 +8,11 @@
 #'
 #'
 #' @export
-impute.zscore <- function(gene.name,gwas,db,snpcov){
+impute.zscore <- function(gene.name,gwas,db,snpcov,snpinfo){
   ##subset gene information
   ##db <- tbl(db,'weights') %>% filter(gene==gene.name) %>% collect()
   db <- db[gene == gene.name]
-  n_snps_in_model <- nrow(db)
+  n_snps_in_model <- nrow(db) ##delete
   snpcov <- snpcov[GENE==gene.name]
   gwas <- gwas[SNP %in% db$rsid]
   n_snps_used <- nrow(gwas) ##keep this for using it in NA genes
@@ -23,16 +23,16 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
                       zscore=zscore,
                       effsize=effsize,
                       n_snps_used=n_snps_used,
-                      n_snps_in_model=n_snps_in_model,
+                      n_snps_noCov_info = NA,
                       stringsAsFactors = FALSE)
     return(res)
   }
-
   ##cov matrix
   snpcov.mat <- create.snpcov.matrix(snpcov)
   snps <- rownames(snpcov.mat)
   snps <- snps[snps %in% gwas$SNP]
   n_snps_used <- length(snps) ##this is actual n
+  n_snps_noCov_info <- n_snps_in_model - n_snps_used
   ##update matrix
   snpcov.mat <- snpcov.mat[snps,snps]
   ##keep weights only present in gwas and cov mat
@@ -92,7 +92,8 @@ impute.zscore <- function(gene.name,gwas,db,snpcov){
                     zscore=zscore,
                     effsize=effsize,
                     n_snps_used=n_snps_used,
-                    n_snps_in_model=n_snps_in_model,
+                    n_snps_noCov_info = n_snps_noCov_info,
                     stringsAsFactors = FALSE)
+  if(snpinfo) res$snps_used_for_prediction=paste(snps,collapse =";")
   return(res)
 }

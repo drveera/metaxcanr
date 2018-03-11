@@ -4,7 +4,8 @@
 \alias{metaxcan}
 \title{metaxcan main function}
 \usage{
-metaxcan(gwas.file, db.file, snpcov.file, genes = NA, ncores = 1)
+metaxcan(gwas.file, db.file, snpcov.file, genes = NA,
+  return.snpinfo = FALSE, ncores = 1)
 }
 \arguments{
 \item{gwas.file}{gwas summary stats file name}

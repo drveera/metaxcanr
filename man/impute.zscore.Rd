@@ -4,7 +4,7 @@
 \alias{impute.zscore}
 \title{impute the z score}
 \usage{
-impute.zscore(gene.name, gwas, db, snpcov)
+impute.zscore(gene.name, gwas, db, snpcov, snpinfo)
 }
 \arguments{
 \item{gene.name}{gene name}

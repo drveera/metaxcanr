@@ -18,6 +18,7 @@ metaxcan <- function(gwas.file,
                      db.file,
                      snpcov.file,
                      genes=NA,
+                     return.snpinfo=FALSE,
                      ncores=1){
   ##load the db file
   db.con <- dbConnect(SQLite(), db.file)
@@ -56,7 +57,8 @@ metaxcan <- function(gwas.file,
     res <- foreach(i=genes,
                    .combine = bind_rows,
                    .packages=c("data.table","metaxcanr","dplyr")) %dopar%
-      impute.zscore.debug(geneid=i,gene.name=i,gwas=gwas,db=db.df,snpcov=snpcov)
+      impute.zscore.debug(geneid=i,gene.name=i,gwas=gwas,db=db.df,
+                          snpcov=snpcov,snpinfo=return.snpinfo)
     res$pvalue <- 2 * pnorm(-abs(res$zscore))
   }
   ##get extras
