@@ -26,7 +26,7 @@ metaxcan <- function(gwas.file,
   db.df <- data.table(db.df)
   if(is.na(genes)[1]){
     genes <- unique(db.df$gene)
-  } else {
+  }
     norig <- length(genes)
     genes <- intersect(unique(db.df$gene),genes)
     if(length(genes)==0){
@@ -38,12 +38,9 @@ metaxcan <- function(gwas.file,
     gwas <- fread(gwas.file, header=TRUE)
     ##keep only SNP, A1, A2, BETA, SE
     gwas <- gwas[,c("SNP","A1","A2","BETA","SE"),with=FALSE]
-
     ##read the covariance file
     snpcov <- fread(snpcov.file, header=TRUE)
     snpcov <- snpcov[!is.na(VALUE)]
-
-
 ###
     ##subset gwas
     gwas <- gwas[SNP %in% db.df$rsid]
@@ -60,7 +57,6 @@ metaxcan <- function(gwas.file,
       impute.zscore.debug(geneid=i,gene.name=i,gwas=gwas,db=db.df,
                           snpcov=snpcov,snpinfo=return.snpinfo)
     res$pvalue <- 2 * pnorm(-abs(res$zscore))
-  }
   ##get extras
   extra <- tbl(db.con,"extra") %>% collect()
   extra <- data.table(extra)
