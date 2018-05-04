@@ -19,6 +19,7 @@ metaxcan <- function(gwas.file,
                      snpcov.file,
                      genes=NA,
                      return.snpinfo=FALSE,
+                     zscore=NA,
                      ncores=1){
   ##load the db file
   db.con <- dbConnect(SQLite(), db.file)
@@ -36,8 +37,12 @@ metaxcan <- function(gwas.file,
     cat("Imputing ",length(genes),"genes out of ",norig," user provided genes \n")
     ##read the gwas
     gwas <- fread(gwas.file, header=TRUE)
-    ##keep only SNP, A1, A2, BETA, SE
+  ##keep only SNP, A1, A2, BETA, SE
+  if(is.na(zscore)){
     gwas <- gwas[,c("SNP","A1","A2","BETA","SE"),with=FALSE]
+  } else {
+    gwas <- gwas[,c("SNP","A1","A2","Z"),with=FALSE]
+  }
     ##read the covariance file
     snpcov <- fread(snpcov.file, header=TRUE)
     snpcov <- snpcov[!is.na(VALUE)]
@@ -55,7 +60,8 @@ metaxcan <- function(gwas.file,
                    .combine = bind_rows,
                    .packages=c("data.table","metaxcanr","dplyr")) %dopar%
       impute.zscore.debug(geneid=i,gene.name=i,gwas=gwas,db=db.df,
-                          snpcov=snpcov,snpinfo=return.snpinfo)
+                          snpcov=snpcov,snpinfo=return.snpinfo,
+                          zscore=zscore)
     res$pvalue <- 2 * pnorm(-abs(res$zscore))
   ##get extras
   extra <- tbl(db.con,"extra") %>% collect()

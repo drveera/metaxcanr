@@ -8,7 +8,11 @@
 #'
 #'
 #' @export
-impute.zscore <- function(gene.name,gwas,db,snpcov,snpinfo){
+impute.zscore <- function(gene.name,
+                          gwas,db,
+                          snpcov,
+                          snpinfo,
+                          zscore=NA){
   ##subset gene information
   ##db <- tbl(db,'weights') %>% filter(gene==gene.name) %>% collect()
   db <- db[gene == gene.name]
@@ -50,19 +54,24 @@ impute.zscore <- function(gene.name,gwas,db,snpcov,snpinfo){
   names(effalleles) <- db$rsid
   effalleles <- effalleles[snps]
 
-  ##betas
-  betas <- gwas$BETA
-  names(betas) <- gwas$SNP
-  betas <- betas[snps]
+  if(is.na(zscore)){
+    ##betas
+    betas <- gwas$BETA
+    names(betas) <- gwas$SNP
+    betas <- betas[snps]
 
-  ##se
-  serrors <- gwas$SE
-  names(serrors) <- gwas$SNP
-  serrors <- serrors[snps]
-
-  ##zscores
-  zscores <- betas/serrors
-  names(zscores) <- snps
+    ##se
+    serrors <- gwas$SE
+    names(serrors) <- gwas$SNP
+    serrors <- serrors[snps]
+    ##zscores
+    zscores <- betas/serrors
+    names(zscores) <- snps
+  } else {
+    zscores <- gwas$Z
+    names(zscores) <- gwas$SNP
+    zscores <- zscores[snps]
+  }
 
   ##a1
   a1 <- gwas$A1
@@ -71,7 +80,7 @@ impute.zscore <- function(gene.name,gwas,db,snpcov,snpinfo){
 
   ##update zscores and betas
   zscores <- ifelse(a1==effalleles,zscores,(zscores*-1))
-  betas <- zscores*serrors
+  if(is.na(zscore)) betas <- zscores*serrors
 
 
   ##get diagonals
@@ -86,7 +95,11 @@ impute.zscore <- function(gene.name,gwas,db,snpcov,snpinfo){
   genevariance <- (snpwts %*% snpcov.mat) %*% snpwts
 
   zscore <- sum(snpwts * zscores * sigmas)/sqrt(genevariance)
-  effsize <- sum(snpwts * betas * (sigmas^2))/genevariance
+  if(is.na(zscore)){
+    effsize <- sum(snpwts * betas * (sigmas^2))/genevariance
+  } else {
+    effsize=NA
+  }
 
   res <- data.frame(gene=gene.name,
                     zscore=zscore,
