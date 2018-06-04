@@ -28,7 +28,8 @@ impute.zscore <- function(gene.name,
                       effsize=effsize,
                       n_snps_used=n_snps_used,
                       n_snps_noCov_info = NA,
-                      stringsAsFactors = FALSE)
+                      stringsAsFactors = FALSE,
+                      error=paste0("No. of GWAS SNPs=",nrow(gwas)))
     return(res)
   }
   ##cov matrix
@@ -94,7 +95,7 @@ impute.zscore <- function(gene.name,
   cat(length(snpwts),dim(snpcov.mat),"\n")
   genevariance <- (snpwts %*% snpcov.mat) %*% snpwts
 
-  zscore <- sum(snpwts * zscores * sigmas)/sqrt(genevariance)
+  zscore.gene <- sum(snpwts * zscores * sigmas)/sqrt(genevariance)
   if(is.na(zscore)){
     effsize <- sum(snpwts * betas * (sigmas^2))/genevariance
   } else {
@@ -102,7 +103,7 @@ impute.zscore <- function(gene.name,
   }
 
   res <- data.frame(gene=gene.name,
-                    zscore=zscore,
+                    zscore=zscore.gene,
                     effsize=effsize,
                     n_snps_used=n_snps_used,
                     n_snps_noCov_info = n_snps_noCov_info,
