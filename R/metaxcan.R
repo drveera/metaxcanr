@@ -39,9 +39,9 @@ metaxcan <- function(gwas.file,
     gwas <- fread(gwas.file, header=TRUE)
   ##keep only SNP, A1, A2, BETA, SE
   if(is.na(zscore)){
-    gwas <- gwas[,c("SNP","A1","A2","BETA","SE"),with=FALSE]
+    gwas <- gwas[,c("SNP","A1","A2","BETA","SE","P"),with=FALSE]
   } else {
-    gwas <- gwas[,c("SNP","A1","A2","Z"),with=FALSE]
+    gwas <- gwas[,c("SNP","A1","A2","Z","P"),with=FALSE]
   }
     ##read the covariance file
     snpcov <- fread(snpcov.file, header=TRUE)
@@ -67,6 +67,7 @@ metaxcan <- function(gwas.file,
   extra <- tbl(db.con,"extra") %>% collect()
   extra <- data.table(extra)
   names(res)[1] <- "gene_id"
+  names(extra)[1] <- "gene_id"
   res <- merge(res,extra,by="gene_id")
   dbDisconnect(db.con)
   return(res)
