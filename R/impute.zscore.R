@@ -21,6 +21,7 @@ impute.zscore <- function(gene.name,
   gwas <- gwas[SNP %in% db$rsid]
   ##extract the minimum p value
   minP <- min(gwas$P,na.rm = TRUE)
+  bestvariant <- gwas[P==minP]$SNP[1]
   n_snps_used <- nrow(gwas) ##keep this for using it in NA genes
   if(nrow(gwas)<=1){
     zscore=NA
@@ -31,6 +32,7 @@ impute.zscore <- function(gene.name,
                       n_snps_used=n_snps_used,
                       n_snps_noCov_info = NA,
                       gwas_minP = minP,
+                      bestvariant=bestvariant,
                       stringsAsFactors = FALSE,
                       error=paste0("No. of GWAS SNPs=",nrow(gwas)))
     return(res)
@@ -111,6 +113,7 @@ impute.zscore <- function(gene.name,
                     n_snps_used=n_snps_used,
                     n_snps_noCov_info = n_snps_noCov_info,
                     gwas_minP = minP,
+                    bestvariant=bestvariant,
                     stringsAsFactors = FALSE)
   if(snpinfo) res$snps_used_for_prediction=paste(snps,collapse =";")
   return(res)
